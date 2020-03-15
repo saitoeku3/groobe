@@ -1,7 +1,7 @@
 import { firestore } from 'firebase-admin'
 import { User, Profile } from './model'
 
-export class UserService {
+export class UserRepository {
   private ref: firestore.CollectionReference
 
   constructor(firestore: firestore.Firestore) {
@@ -12,11 +12,6 @@ export class UserService {
     const { docs } = await this.ref.where('id', '==', id).get()
     const user = docs.length ? (docs[0].data() as User) : undefined
     return user
-  }
-
-  async exists({ id }: { id: User['id'] }): Promise<boolean> {
-    const { empty } = await this.ref.where('id', '==', id).get()
-    return !empty
   }
 
   async create({ profile }: { profile: Profile }): Promise<User> {

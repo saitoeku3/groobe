@@ -8,13 +8,13 @@ import passport from 'passport'
 import { resolve } from 'path'
 import uid from 'uid-safe'
 import { env } from '../constants/env'
-import { Profile, UserService } from '../domains/user'
+import { Profile, UserRepository } from '../domains/user'
 import { firestore } from '../lib/firebase'
 
 const { PORT, IS_DEV, DOMAIN, APPLE_CLIENT_ID, APPLE_KEY_ID, APPLE_TEAM_ID } = env
 const app = next({ dev: IS_DEV })
 const handle = app.getRequestHandler()
-const userService = new UserService(firestore)
+const userRepository = new UserRepository(firestore)
 
 const sessionConfig = {
   secret: uid.sync(18),
@@ -57,8 +57,8 @@ app.prepare().then(() => {
     (req: Request, res: Response, next: NextFunction) => {
       passport.authenticate('apple', (_, profile: Profile) => {
         req.logIn(profile, async () => {
-          const exists = await userService.exists({ id: profile.id })
-          if (!exists) await userService.create({ profile })
+          const user = await userRepository.find({ id: profile.id })
+          if (!user) await userRepository.create({ profile })
           res.redirect('/')
         })
       })(req, res, next)
