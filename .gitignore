@@ -1,0 +1,13 @@
+# vendor
+node_modules
+
+# out directories
+.next
+dist
+
+# config files
+apple-auth-key.p8
+serviceAccount.json
+
+# environment variables
+.envrc

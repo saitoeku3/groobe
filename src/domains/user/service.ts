@@ -1,0 +1,32 @@
+import { firestore } from 'firebase-admin'
+import { User, Profile } from './model'
+
+export class UserService {
+  private ref: firestore.CollectionReference
+
+  constructor(firestore: firestore.Firestore) {
+    this.ref = firestore.collection('users')
+  }
+
+  async find({ id }: { id: User['id'] }): Promise<User | undefined> {
+    const { docs } = await this.ref.where('id', '==', id).get()
+    const user = docs.length ? (docs[0].data() as User) : undefined
+    return user
+  }
+
+  async exists({ id }: { id: User['id'] }): Promise<boolean> {
+    const { empty } = await this.ref.where('id', '==', id).get()
+    return !empty
+  }
+
+  async create({ profile }: { profile: Profile }): Promise<User> {
+    const user: User = {
+      id: profile.id,
+      name: '',
+      type: 'apple',
+      imageUrl: ''
+    }
+    await this.ref.add(user)
+    return user
+  }
+}

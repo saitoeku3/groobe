@@ -1,0 +1,13 @@
+html {
+  width: 100%;
+  min-height: 100%;
+  color: #222;
+  font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
+    'Helvetica Neue', sans-serif;
+}
+
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
