@@ -3,6 +3,8 @@ import { SessionNextPage } from 'next'
 import Link from 'next/link'
 import styled from 'styled-components'
 import Layout from '../components/Layout'
+import SignInWithApple from '../components/SignInWithApple'
+import SignInWithSpotify from '../components/SignInWithSpotify'
 
 const Index: SessionNextPage = ({ currentUser }) => {
   useEffect(() => console.log(currentUser), [currentUser])
@@ -19,10 +21,10 @@ const Index: SessionNextPage = ({ currentUser }) => {
         </TermText>
         <SignUpButtonList>
           <Link href="/sign-in-with-apple">
-            <SignUpButton>Sign In with Applle</SignUpButton>
+            <SignInWithApple />
           </Link>
           <Link href="/sign-in-with-spotify">
-            <SignUpButton>Sign In with Spotify</SignUpButton>
+            <SignInWithSpotify />
           </Link>
         </SignUpButtonList>
       </Hero>
@@ -60,14 +62,6 @@ const UnderLineText = styled.span`
 const SignUpButtonList = styled.div`
   display: flex;
   margin: 0 auto auto;
-`
-
-const SignUpButton = styled.div`
-  width: 300px;
-  height: 56px;
-  background-color: #fff;
-  cursor: pointer;
-  margin: 0 24px;
 `
 
 export default Index
