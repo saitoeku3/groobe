@@ -1,4 +1,4 @@
-import { Profile } from '../../src/domains/user'
+import { AppleProfile } from '../../src/domains/user'
 
 declare module '@nicokaiser/passport-apple' {
   import { IncomingMessage } from 'http'
@@ -15,7 +15,7 @@ declare module '@nicokaiser/passport-apple' {
   type Verify = (
     accessToken: string,
     refreshToken: string,
-    profile: Profile,
+    profile: AppleProfile,
     done: Function
   ) => void
 

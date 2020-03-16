@@ -19,7 +19,10 @@ const Index: SessionNextPage = ({ currentUser }) => {
         </TermText>
         <SignUpButtonList>
           <Link href="/sign-in-with-apple">
-            <SignUpButton />
+            <SignUpButton>Sign In with Applle</SignUpButton>
+          </Link>
+          <Link href="/sign-in-with-spotify">
+            <SignUpButton>Sign In with Spotify</SignUpButton>
           </Link>
         </SignUpButtonList>
       </Hero>

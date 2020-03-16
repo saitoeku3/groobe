@@ -6,6 +6,8 @@ type Env = {
   APPLE_CLIENT_ID: string
   APPLE_TEAM_ID: string
   APPLE_KEY_ID: string
+  SPOTIFY_CLIENT_ID: string
+  SPOTIFY_CLIENT_SECRET: string
 }
 
 export const env: Env = {
@@ -18,5 +20,7 @@ export const env: Env = {
   DATABSE_URL: process.env.DATABSE_URL || '',
   APPLE_CLIENT_ID: process.env.APPLE_CLIENT_ID || '',
   APPLE_KEY_ID: process.env.APPLE_KEY_ID || '',
-  APPLE_TEAM_ID: process.env.APPLE_TEAM_ID || ''
+  APPLE_TEAM_ID: process.env.APPLE_TEAM_ID || '',
+  SPOTIFY_CLIENT_ID: process.env.SPOTIFY_CLIENT_ID || '',
+  SPOTIFY_CLIENT_SECRET: process.env.SPOTIFY_CLIENT_SECRET || ''
 }

@@ -5,9 +5,39 @@ export type User = {
   imageUrl: string
 }
 
-export type Profile = {
+export type AppleProfile = {
   id: string
-  accessToken: string
+  email?: string
+  emailVerified?: boolean
+  name: {
+    firstName: string
+    lastName: string
+  }
 }
 
-export type CurrentUser = User & Profile['accessToken']
+export type SpotifyProfile = {
+  provider: 'spotify'
+  id: string
+  username: string
+  displayName: string
+  profileUrl: string
+  photos: string[]
+  country: unknown | null
+  followers: number
+  product: unknown | null
+  _raw: string
+  _json: {
+    display_name: string
+    external_urls: { spotify: string }
+    followers: { href: null | unknown; total: number }
+    href: string
+    id: string
+    images: string[]
+    type: 'user'
+    uri: string
+  }
+}
+
+export type Profile = AppleProfile | SpotifyProfile
+
+export type CurrentUser = User & { sccessToken: string }

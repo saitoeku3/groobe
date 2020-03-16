@@ -14,11 +14,11 @@ export class UserRepository {
     return user
   }
 
-  async create({ profile }: { profile: Profile }): Promise<User> {
+  async create({ profile, type }: { profile: Profile; type: User['type'] }): Promise<User> {
     const user: User = {
       id: profile.id,
       name: '',
-      type: 'apple',
+      type,
       imageUrl: ''
     }
     await this.ref.add(user)

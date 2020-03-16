@@ -17,7 +17,7 @@ declare module 'next/app' {
       req: IncomingMessage & {
         session?: {
           passport: {
-            user?: Profile
+            user?: Profile & { accessToken: string }
           }
         }
       }
