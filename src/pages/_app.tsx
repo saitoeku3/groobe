@@ -1,6 +1,6 @@
 import React from 'react'
 import { SessionAppContext } from 'next/app'
-import { CurrentUser, User } from '../domains/user'
+import { CurrentUser, UserService } from '../domains/user'
 import { axios } from '../lib/axios'
 import '../assets/styles/common.css'
 
@@ -20,9 +20,8 @@ App.getInitialProps = async ({ Component, ctx }: SessionAppContext) => {
     return { pageProps, currentUser: undefined }
   }
 
-  const {
-    data: { user }
-  } = await axios.get<{ user: User }>(`/api/users/${id}`)
+  const userService = new UserService(axios)
+  const user = await userService.find({ id })
 
   return {
     pageProps,
