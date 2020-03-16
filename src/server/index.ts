@@ -1,17 +1,15 @@
-import AppleStrategy from '@nicokaiser/passport-apple'
 import express, { Request, Response, NextFunction } from 'express'
 import session from 'express-session'
-import { readFileSync } from 'fs'
 import http from 'http'
 import next from 'next'
 import passport from 'passport'
-import { resolve } from 'path'
 import uid from 'uid-safe'
+import { appleStrategy } from './strategies/apple'
 import { env } from '../constants/env'
 import { Profile, UserRepository } from '../domains/user'
 import { firestore } from '../lib/firebase'
 
-const { PORT, IS_DEV, DOMAIN, APPLE_CLIENT_ID, APPLE_KEY_ID, APPLE_TEAM_ID } = env
+const { PORT, IS_DEV } = env
 const app = next({ dev: IS_DEV })
 const handle = app.getRequestHandler()
 const userRepository = new UserRepository(firestore)
@@ -24,20 +22,6 @@ const sessionConfig = {
   resave: false,
   saveUninitialized: true
 }
-
-const appleStrategy = new AppleStrategy(
-  {
-    clientID: APPLE_CLIENT_ID,
-    teamID: APPLE_TEAM_ID,
-    callbackURL: `https://${DOMAIN}/sign-in-with-apple/callback`,
-    scope: [],
-    keyID: APPLE_KEY_ID,
-    key: readFileSync(resolve('config', 'apple-auth-key.p8'))
-  },
-  async (accessToken, refreshToken, profile, done) => {
-    done(null, { ...profile, accessToken })
-  }
-)
 
 app.prepare().then(() => {
   const server = express()
