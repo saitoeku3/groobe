@@ -30,6 +30,7 @@
     "react-dom": "^16.13.0",
     "react-is": "^16.13.0",
     "styled-components": "^5.0.1",
+    "styled-normalize": "^8.0.7",
     "uid-safe": "^2.1.5"
   },
   "devDependencies": {
