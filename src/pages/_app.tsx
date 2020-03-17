@@ -1,6 +1,7 @@
 import React from 'react'
 import { SessionAppContext } from 'next/app'
 import { ThemeProvider } from 'styled-components'
+import { Normalize } from 'styled-normalize'
 import { theme } from '../constants/theme'
 import { CurrentUser, UserService } from '../domains/user'
 import { axios } from '../lib/axios'
@@ -12,6 +13,7 @@ const App = ({
   ...pageProps
 }: SessionAppContext & { currentUser?: CurrentUser }) => (
   <ThemeProvider theme={theme}>
+    <Normalize />
     <Component currentUser={currentUser} {...pageProps} />
   </ThemeProvider>
 )
