@@ -1,33 +1,57 @@
-import React from 'react'
+import React, { useState, useRef } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
 import Button from './common/Button'
 import Icon from './common/Icon'
 import Thumbnail from './common/Thumbnail'
+import NavigationPopper from './NavigationPopper'
 import { CurrentUser } from '../domains/user'
 
 type Props = {
   currentUser?: CurrentUser
 }
 
-const Header: React.FC<Props> = ({ currentUser }) => (
-  <Wrapper>
-    <Link href="/">
-      <Title>groobe</Title>
-    </Link>
-    <Navigation>
-      <SubmitButton color="gray" flat>
-        <Icon name="upload" />
-        <SubmitButtonText>プレイリストを投稿</SubmitButtonText>
-      </SubmitButton>
-      {currentUser && (
-        <Link href="/users/[id]" as={`/users/${currentUser.id}`}>
-          <UserThumbnail src={currentUser.imageUrl} circle hoverable />
-        </Link>
-      )}
-    </Navigation>
-  </Wrapper>
-)
+const Header: React.FC<Props> = ({ currentUser }) => {
+  const [isPopperDisplayed, setIsPopperDisplayed] = useState(false)
+  const userThumbnailRef = useRef<HTMLDivElement>(null)
+
+  const closeNavigationPopper = (event?: MouseEvent) => {
+    const isUserThumbnailClicked = userThumbnailRef.current?.contains(event?.target as Node)
+    if (event && isUserThumbnailClicked) {
+      event.preventDefault()
+      event.stopPropagation()
+    }
+    setIsPopperDisplayed(false)
+  }
+
+  return (
+    <Wrapper>
+      <Link href="/">
+        <Title>groobe</Title>
+      </Link>
+      <Navigation>
+        {currentUser && (
+          <>
+            <SubmitButton color="gray" flat>
+              <Icon name="upload" />
+              <SubmitButtonText>プレイリストを投稿</SubmitButtonText>
+            </SubmitButton>
+            <UserThumbnail
+              ref={userThumbnailRef}
+              src={currentUser.imageUrl}
+              onClick={() => setIsPopperDisplayed(!isPopperDisplayed)}
+              circle
+              hoverable
+            />
+          </>
+        )}
+        {isPopperDisplayed && (
+          <NavigationPopper currentUser={currentUser} close={closeNavigationPopper} />
+        )}
+      </Navigation>
+    </Wrapper>
+  )
+}
 
 const Wrapper = styled.header`
   width: 100%;
