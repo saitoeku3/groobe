@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react'
+import Link from 'next/link'
 import styled from 'styled-components'
 import appleLogo from '../assets/images/apple-logo.png'
 
@@ -8,10 +9,12 @@ type Props = {
 }
 
 const SignInWithApple = forwardRef<HTMLAnchorElement, Props>(({ onClick, href }, ref) => (
-  <Wrapper href={href} onClick={onClick} ref={ref}>
-    <Logo src={appleLogo} />
-    <Text>Sign up with Apple</Text>
-  </Wrapper>
+  <Link href="/sign-in-with-apple">
+    <Wrapper href={href} onClick={onClick} ref={ref}>
+      <Logo src={appleLogo} alt="apple logo" />
+      <Text>Sign up with Apple</Text>
+    </Wrapper>
+  </Link>
 ))
 
 const Wrapper = styled.a`

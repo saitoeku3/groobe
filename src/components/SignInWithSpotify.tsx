@@ -1,4 +1,5 @@
 import React, { forwardRef } from 'react'
+import Link from 'next/link'
 import styled from 'styled-components'
 import spotifyLogo from '../assets/images/spotify-logo.png'
 
@@ -8,10 +9,12 @@ type Props = {
 }
 
 const SignInWithSpotify = forwardRef<HTMLAnchorElement, Props>(({ onClick, href }, ref) => (
-  <Wrapper href={href} onClick={onClick} ref={ref}>
-    <Logo src={spotifyLogo} />
-    <Text>Sign up with Spotify</Text>
-  </Wrapper>
+  <Link href="/sign-in-with-spotify">
+    <Wrapper href={href} onClick={onClick} ref={ref}>
+      <Logo src={spotifyLogo} alt="spotify logo" />
+      <Text>Sign up with Spotify</Text>
+    </Wrapper>
+  </Link>
 ))
 
 const Wrapper = styled.a`
