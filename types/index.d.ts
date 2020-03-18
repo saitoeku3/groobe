@@ -3,14 +3,6 @@ import { AppContext } from 'next/app'
 import { IncomingMessage } from 'http'
 import { Profile, CurrentUser } from '../src/domains/user'
 
-declare module 'next' {
-  export type SessionNextPage<P = {}, IP = P> = NextComponentType<
-    NextPageContext,
-    IP,
-    P & { currentUser: CurrentUser }
-  >
-}
-
 declare module 'next/app' {
   interface SessionAppContext extends AppContext {
     ctx: {
@@ -22,6 +14,8 @@ declare module 'next/app' {
         }
       }
     } & AppContext['ctx']
-    Component: NextComponentType<NextPageContext, {}, { currentUser?: CurrentUser }>
+    currentUser?: CurrentUser
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    Component: NextComponentType<NextPageContext, {}, any>
   }
 }
