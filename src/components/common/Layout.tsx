@@ -1,14 +1,16 @@
 import React from 'react'
 import styled from 'styled-components'
-import Header from './Header'
+import Header from '../Header'
+import { CurrentUser } from '../../domains/user'
 
 type Props = {
   className?: string
+  currentUser?: CurrentUser
 }
 
-const Layout: React.FC<Props> = ({ children }) => (
+const Layout: React.FC<Props> = ({ children, currentUser }) => (
   <Wrapper>
-    <Header />
+    <Header currentUser={currentUser} />
     <Main>{children}</Main>
   </Wrapper>
 )
@@ -20,7 +22,7 @@ const Wrapper = styled.div`
 
 const Main = styled.main`
   width: 100%;
-  height: calc(100% - 56px);
+  height: 100%;
 `
 
 export default Layout
