@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react'
-import { SessionNextPage } from 'next'
-import Link from 'next/link'
+import React from 'react'
+import { NextPage } from 'next'
 import styled from 'styled-components'
-import Head from '../components/Head'
-import Layout from '../components/Layout'
+import Head from '../components/common/Head'
+import Layout from '../components/common/Layout'
 import SignInWithApple from '../components/SignInWithApple'
 import SignInWithSpotify from '../components/SignInWithSpotify'
+import { useCurrentUser } from '../hooks/useCurrentUser'
 
-const Index: SessionNextPage = ({ currentUser }) => {
-  useEffect(() => console.log(currentUser), [currentUser])
+const Index: NextPage = () => {
+  const currentUser = useCurrentUser()
 
   return (
     <>
       <Head />
-      <Layout>
+      <Layout currentUser={currentUser}>
         <Hero>
           <HeroTitle>好きな音楽を誰とでも</HeroTitle>
           <HeroText>
@@ -23,12 +23,8 @@ const Index: SessionNextPage = ({ currentUser }) => {
             <UnderLineText>利用規約</UnderLineText>に同意してアカウントを作成
           </TermText>
           <SignUpButtonList>
-            <Link href="/sign-in-with-apple">
-              <SignInWithApple />
-            </Link>
-            <Link href="/sign-in-with-spotify">
-              <SignInWithSpotify />
-            </Link>
+            <SignInWithApple />
+            <SignInWithSpotify />
           </SignUpButtonList>
         </Hero>
       </Layout>
