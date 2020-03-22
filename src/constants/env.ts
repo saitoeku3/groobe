@@ -3,6 +3,7 @@ type Env = {
   IS_DEV: boolean
   DOMAIN: string
   DATABSE_URL: string
+  FIREBASE_CONFIG: string
   APPLE_CLIENT_ID: string
   APPLE_TEAM_ID: string
   APPLE_KEY_ID: string
@@ -18,6 +19,7 @@ export const env: Env = {
       ? process.env.DOMAIN_DEVELOPMENT
       : process.env.DOMAIN_PRODUCTION) || '',
   DATABSE_URL: process.env.DATABSE_URL || '',
+  FIREBASE_CONFIG: process.env.FIREBASE_CONFIG || '',
   APPLE_CLIENT_ID: process.env.APPLE_CLIENT_ID || '',
   APPLE_KEY_ID: process.env.APPLE_KEY_ID || '',
   APPLE_TEAM_ID: process.env.APPLE_TEAM_ID || '',

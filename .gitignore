@@ -7,7 +7,6 @@ dist
 
 # config files
 apple-auth-key.p8
-serviceAccount.json
 
 # environment variables
 .envrc
