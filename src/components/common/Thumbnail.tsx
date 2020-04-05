@@ -22,8 +22,6 @@ const Img = styled.div<Pick<Props, 'circle' | 'hoverable' | 'src'>>`
   border-radius: ${({ circle }) => circle && '50%'};
   background-repeat: no-repeat;
   background-size: cover;
-  width: 36px;
-  height: 36px;
   ${({ hoverable }) =>
     hoverable &&
     css`
