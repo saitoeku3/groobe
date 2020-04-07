@@ -1,5 +1,5 @@
 import React from 'react'
-import { NextPage } from 'next'
+import { NextPage, GetServerSideSessionProps } from 'next'
 import styled from 'styled-components'
 import Button from '~/components/common/Button'
 import Head from '~/components/common/Head'
@@ -7,35 +7,16 @@ import Icon from '~/components/common/Icon'
 import Layout from '~/components/common/Layout'
 import Thumbnail from '~/components/common/Thumbnail'
 import PlaylistThumbnail from '~/components/PlaylistThumbnail'
-import { Playlist } from '~/domains/playlist'
+import { Playlist, PlaylistService } from '~/domains/playlist'
 import { User, UserService } from '~/domains/user'
 import { useCurrentUser } from '~/hooks/useCurrentUser'
-import { axios } from '~/lib/axios'
-
-const playlists: Playlist[] = [
-  {
-    id: '1',
-    title: '最初のプレイリスト',
-    description: '',
-    tracks: [],
-    thumbnailUrl: '',
-    userId: '1'
-  },
-  {
-    id: '2',
-    title: '次のプレイリスト',
-    description: '',
-    tracks: [],
-    thumbnailUrl: '',
-    userId: '2'
-  }
-]
 
 type Props = {
   user?: User
+  playlists: Playlist[]
 }
 
-const UsersShow: NextPage<Props> = ({ user }) => {
+const UsersShow: NextPage<Props> = ({ user, playlists }) => {
   const currentUser = useCurrentUser()
 
   return (
@@ -67,11 +48,33 @@ const UsersShow: NextPage<Props> = ({ user }) => {
   )
 }
 
-UsersShow.getInitialProps = async ({ query }) => {
-  const { id } = query as { id: string }
-  const userService = new UserService(axios)
+export const getServerSideProps: GetServerSideSessionProps = async ({ query, req }) => {
+  const id: string = query.id
+  const userService = new UserService()
   const user = await userService.find({ id })
-  return { user }
+
+  const currentUser = req?.session?.passport?.user
+  if (!currentUser) return { user, playlists: [] }
+
+  let type: User['type'] = 'spotify'
+
+  if (currentUser && 'provider' in currentUser) {
+    type = 'spotify'
+  } else {
+    type = 'apple'
+  }
+
+  const playlistService = new PlaylistService({
+    headers: {
+      Authorization: currentUser.accessToken
+    }
+  })
+
+  const playlists = await playlistService.findAll({ type, userId: user?.id || '' })
+
+  return {
+    props: { user, playlists }
+  }
 }
 
 const Hero = styled.div`
