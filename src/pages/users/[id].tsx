@@ -54,7 +54,7 @@ export const getServerSideProps: GetServerSideSessionProps = async ({ query, req
   const user = await userService.find({ id })
 
   const currentUser = req?.session?.passport?.user
-  if (!currentUser) return { user, playlists: [] }
+  if (!currentUser) return { props: { user, playlists: [] } }
 
   let type: User['type'] = 'spotify'
 
@@ -69,12 +69,9 @@ export const getServerSideProps: GetServerSideSessionProps = async ({ query, req
       Authorization: currentUser.accessToken
     }
   })
-
   const playlists = await playlistService.findAll({ type, userId: user?.id || '' })
 
-  return {
-    props: { user, playlists }
-  }
+  return { props: { user, playlists } }
 }
 
 const Hero = styled.div`

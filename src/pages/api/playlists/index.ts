@@ -1,16 +1,16 @@
 import { Request, Response } from 'express'
-import { Playlist } from '~/domains/playlist'
+import { Playlist, PlaylistsResponse } from '~/domains/playlist'
 import { Service } from '~/domains/service'
 import { spotify } from '~/lib/spotify'
 
-const playlists = async (req: Request, res: Response) => {
+const playlists = async (req: Request, res: Response<PlaylistsResponse['index']>) => {
   const type: Service['type'] = req.query.type
   const userId: string = req.query.userId
   const accessToken = req.headers.authorization || ''
 
   switch (type) {
     case 'apple': {
-      res.end()
+      res.json({ playlists: [] })
       break
     }
     case 'spotify': {
@@ -29,7 +29,7 @@ const playlists = async (req: Request, res: Response) => {
         return playlist
       })
 
-      res.json(playlists)
+      res.json({ playlists })
       break
     }
   }

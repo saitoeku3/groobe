@@ -1,5 +1,6 @@
 import Axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { baseURL } from '~/constants'
+import { Playlist, PlaylistsResponse } from '~/domains/playlist'
 import { Service } from '~/domains/service'
 import { User } from '~/domains/user'
 
@@ -19,8 +20,10 @@ export class PlaylistService {
   }: {
     type: Service['type']
     userId: User['id']
-  }): Promise<User | undefined> {
-    const { data } = await this.fetch.get(`/playlists`, { params: { type, userId } })
+  }): Promise<Playlist[]> {
+    const { data } = await this.fetch.get<PlaylistsResponse['index']>(`/api/playlists`, {
+      params: { type, userId }
+    })
     return data.playlists
   }
 }

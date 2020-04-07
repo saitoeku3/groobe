@@ -1,7 +1,6 @@
 import Axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 import { baseURL } from '~/constants'
-import { User } from '~/domains/user/model'
-import { UsersResponse } from '~/domains/user/types'
+import { User, UsersResponse } from '~/domains/user'
 
 export class UserService {
   private fetch: AxiosInstance
