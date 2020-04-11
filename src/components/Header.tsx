@@ -1,11 +1,12 @@
 import React, { useState, useRef } from 'react'
 import Link from 'next/link'
 import styled from 'styled-components'
-import Button from './common/Button'
-import Icon from './common/Icon'
-import Thumbnail from './common/Thumbnail'
-import NavigationPopper from './NavigationPopper'
-import { CurrentUser } from '../domains/user'
+import Button from '~/components/common/Button'
+import Icon from '~/components/common/Icon'
+import Thumbnail from '~/components/common/Thumbnail'
+import NavigationPopper from '~/components/NavigationPopper'
+import SearchBox from '~/components/SearchBox'
+import { CurrentUser } from '~/domains/user'
 
 type Props = {
   currentUser?: CurrentUser
@@ -29,6 +30,7 @@ const Header: React.FC<Props> = ({ currentUser }) => {
       <Link href="/">
         <Title>groobe</Title>
       </Link>
+      <SearchBox />
       <Navigation>
         {currentUser && (
           <>
@@ -56,11 +58,11 @@ const Header: React.FC<Props> = ({ currentUser }) => {
 const Wrapper = styled.header`
   width: 100%;
   height: 64px;
-  box-shadow: 0 0 12px #00000030;
+  /* box-shadow: 0 0 12px #00000030; */
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
-  padding: 10px 32px;
+  padding: 12px 32px;
 `
 
 const Title = styled.a`
@@ -92,8 +94,8 @@ const SubmitButtonText = styled.span`
 `
 
 const UserThumbnail = styled(Thumbnail)`
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
 `
 
 export default Header
